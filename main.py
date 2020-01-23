@@ -18,7 +18,7 @@ from PIL import Image
 from smartcard.System import readers
 from smartcard.util import HexListToBinString, toHexString, toBytes
 
-server = 'http://account-regis.ku.ac.th:8000'
+server = 'https://account-regis.ku.ac.th:8443'
 # Check card
 SELECT = [0x00, 0xA4, 0x04, 0x00, 0x08]
 THAI_CARD = [0xA0, 0x00, 0x00, 0x00, 0x54, 0x48, 0x00, 0x01]
@@ -107,14 +107,14 @@ def login():
 	address = server + '/client'
 	data = {'client_id': client_id, 'client_secret': client_secret}
 	r = requests.post(address, data=data)
+	#print(r.text)
 	y = json.loads(r.text)
-	
 	if y["client"] == 1:
 		menu()
 	else:
 		print('Error: Not a privileged client.')
 		pass
-
+	
 def menu():
     print("************MAIN MENU**************")
     print()
@@ -227,10 +227,10 @@ def readCard():
 			print()
 			print('==================================================')
 
-			link_to_post = server + '/activate/' + result['cn'] + '/' + result['token']
+			link_to_post = server + '/activate/' + result['token'] + '/' + result['cn']
 			url = pyqrcode.create(link_to_post)
 			url.png('./static/images/url.png', scale=8)
-			print("Printing QR code")
+			#print("Printing QR code")
 			#print(url.terminal())
 
 			#export csv
