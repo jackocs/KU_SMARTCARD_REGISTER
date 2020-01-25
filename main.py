@@ -201,6 +201,10 @@ def readCard():
 	# CID
 	data = getData(CMD_CID, req)
 	cid = thai2unicode(data[0])
+
+	data = getData(CMD_ENFULLNAME, req)
+	en_name = thai2unicode(data[0])
+	#print ("TH Fullname: " +  thai2unicode(data[0]))
 	
 	if cid:
 		print ("IDCARDNO: " + cid)
@@ -229,13 +233,13 @@ def readCard():
 
 			link_to_post = server + '/activate/' + result['token'] + '/' + result['cn']
 			url = pyqrcode.create(link_to_post)
-			url.png('./static/images/url.png', scale=8)
+			url.png('./static/images/url.png', scale=7)
 			#print("Printing QR code")
 			#print(url.terminal())
 
 			#export csv
 			cn = result['cn'] 
-			nms = [[cn]]
+			nms = [[cn,en_name]]
 			f = open('./static/cn.csv', 'w')
 			with f:
 			    writer = csv.writer(f)

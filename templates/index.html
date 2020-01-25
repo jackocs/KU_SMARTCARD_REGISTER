@@ -5,5 +5,6 @@
 {% endblock %}
 {% block body %}
 
- <img src= {{ url_for('static', filename = 'images/url.png') }} class="rounded" >
+<h3>{{en_name}}</h3>
+ <img src="{{ url_for('static', filename = 'images/url.png') }}?{{datetime}}" class="rounded" >
 {% endblock %}

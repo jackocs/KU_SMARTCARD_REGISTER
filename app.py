@@ -2,19 +2,22 @@
 
 from flask import Flask, render_template
 import csv
+import time
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
 	try:
+		date = time.strftime('%d%m%y%H%M%S')
 		f = open('./static/cn.csv', 'r')
 		with f:
 			reader = csv.reader(f)
 			for row in reader:
-				for e in row:
-					print(e)
-			return render_template('index.html', cn=e)
+				print(row)
+				#for e in row:
+				#	print(e)
+			return render_template('index.html', cn=row[0],en_name=row[1],datetime=date)
 	except Exception as e:
 		print("File no accessible")
 	finally:
